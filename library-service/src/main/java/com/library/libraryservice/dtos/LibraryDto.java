@@ -6,12 +6,11 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class LibraryDto {
-    private UUID id;
+    private String id;
     private List<BookDto> userBooks = new ArrayList<>();
 }

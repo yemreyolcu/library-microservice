@@ -7,13 +7,11 @@ import com.library.libraryservice.dtos.LibraryDto;
 import com.library.libraryservice.entities.Library;
 import com.library.libraryservice.exceptions.LibraryNotFoundException;
 import com.library.libraryservice.repositories.LibraryRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,17 +24,16 @@ public class LibraryService {
         this.bookServiceClient = bookServiceClient;
     }
 
-    public LibraryDto getAllBooksInLibraryById(UUID id) {
+    public LibraryDto getAllBooksInLibraryById(String id) {
+        System.out.println("Library : " + libraryRepository.findById(id));
         Library library = libraryRepository.findById(id)
-                .orElseThrow(() -> new LibraryNotFoundException("Library with id " + id + " not found"));
-        System.out.println("Library : " + library) ;
-        List<BookDto> books = library.getBooks().stream().map(bookId -> {
-            ResponseEntity<BookDto> book = bookServiceClient.getBookDetailById(UUID.fromString(bookId));
-            return book.getBody();
-        }).collect(Collectors.toList());
-        LibraryDto libraryDto = new LibraryDto(library.getId(), books);
-        System.out.println("LibraryDto : " + libraryDto);
-        return libraryDto;
+                .orElseThrow(() -> new LibraryNotFoundException("Library could not found by id: " + id));
+
+        return new LibraryDto(library.getId(),
+                library.getBooks()
+                        .stream()
+                        .map(book -> bookServiceClient.getBookDetailById(book).getBody())
+                        .collect(Collectors.toList()));
     }
 
     public LibraryDto createLibrary() {
@@ -46,10 +43,12 @@ public class LibraryService {
     }
 
     public void addBookToLibrary(CreateBookDto request) {
-        UUID bookId = Objects.requireNonNull(bookServiceClient.getBookByIsbn(request.getIsbn()).getBody()).getId();
+        String bookId = Objects.requireNonNull(bookServiceClient.getBookByIsbn(request.getIsbn()).getBody()).getId();
+        System.out.println("Book id : " + bookId);
+        System.out.println("Create Library Request : " + libraryRepository.findById(request.getId()));
         Library library = libraryRepository.findById(request.getId())
                 .orElseThrow(() -> new LibraryNotFoundException("Library with id " + request.getId() + " not found"));
-        library.getBooks().add(bookId.toString());
+        library.getBooks().add(bookId);
         libraryRepository.save(library);
     }
 }

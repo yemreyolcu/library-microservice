@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface LibraryRepository extends JpaRepository<Library, UUID> {
+public interface LibraryRepository extends JpaRepository<Library, String> {
 }
