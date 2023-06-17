@@ -3,7 +3,7 @@ package com.book.bookservice.controllers;
 import com.book.bookservice.dtos.BookDto;
 import com.book.bookservice.dtos.BookIdDto;
 import com.book.bookservice.services.BookService;
-import jakarta.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
