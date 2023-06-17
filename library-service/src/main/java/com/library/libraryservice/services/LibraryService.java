@@ -29,12 +29,14 @@ public class LibraryService {
     public LibraryDto getAllBooksInLibraryById(UUID id) {
         Library library = libraryRepository.findById(id)
                 .orElseThrow(() -> new LibraryNotFoundException("Library with id " + id + " not found"));
-        return new LibraryDto(library.getId(),
-                library.getBooks()
-                        .stream()
-                        .map(bookId -> bookServiceClient.getBookDetailById(UUID.fromString(bookId)))
-                        .map(ResponseEntity::getBody)
-                        .collect(Collectors.toList()));
+        System.out.println("Library : " + library) ;
+        List<BookDto> books = library.getBooks().stream().map(bookId -> {
+            ResponseEntity<BookDto> book = bookServiceClient.getBookDetailById(UUID.fromString(bookId));
+            return book.getBody();
+        }).collect(Collectors.toList());
+        LibraryDto libraryDto = new LibraryDto(library.getId(), books);
+        System.out.println("LibraryDto : " + libraryDto);
+        return libraryDto;
     }
 
     public LibraryDto createLibrary() {

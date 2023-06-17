@@ -1,10 +1,12 @@
 package com.library.libraryservice.entities;
 
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,6 +14,8 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "library")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Library {
     @Id
     @GeneratedValue(generator = "UUID")

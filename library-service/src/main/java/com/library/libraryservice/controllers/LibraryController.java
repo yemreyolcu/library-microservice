@@ -21,6 +21,7 @@ public class LibraryController {
 
     @GetMapping("/{id}")
     public ResponseEntity<LibraryDto> getLibraryById(@PathVariable UUID id) {
+        System.out.println("ID: " + id);
         Optional<LibraryDto> library = Optional.ofNullable(libraryService.getAllBooksInLibraryById(id));
         return library.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
