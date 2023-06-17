@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -20,7 +19,7 @@ public class Book {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id")
-    private UUID id;
+    private String id;
 
     @Column(name = "title", nullable = false)
     private String title;

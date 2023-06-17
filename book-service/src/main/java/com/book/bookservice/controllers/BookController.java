@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/book")
@@ -36,7 +35,7 @@ public class BookController {
     }
 
     @GetMapping("/book/{id}")
-    public ResponseEntity<BookDto> getBookDetailById(@PathVariable UUID id) {
+    public ResponseEntity<BookDto> getBookDetailById(@PathVariable String id) {
         Optional<BookDto> book = Optional.ofNullable(bookService.getBookDetailById(id));
         return book.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }

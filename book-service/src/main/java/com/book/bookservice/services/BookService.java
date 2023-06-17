@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class BookService {
@@ -33,7 +32,7 @@ public class BookService {
         );
     }
 
-    public BookDto getBookDetailById(UUID id) {
+    public BookDto getBookDetailById(String id) {
         Optional<Book> book = bookRepository.findById(id);
         return book.map(BookDto::new).orElseThrow(
                 () -> new BookNotFoundException("Book with id " + id + " not found")
