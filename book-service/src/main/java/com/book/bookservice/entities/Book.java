@@ -11,7 +11,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Getter
 @Setter
 @Entity
-@Table(name = "book")
+@Table(schema = "public", name = "book")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Book {
